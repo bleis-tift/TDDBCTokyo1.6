@@ -36,10 +36,7 @@ let toStr kvs =
   sprintf "%A" kvs
 
 let toStrFrom t kvs =
-  kvs
-  |> Seq.takeWhile (fun (_, _, dt) -> t <= dt)
-  |> Seq.toList
-  |> sprintf "%A"
+  kvs |> deleteUntil t |> toStr
 
 let dump kvs =
   do printf "%s" (kvs |> toStr)
