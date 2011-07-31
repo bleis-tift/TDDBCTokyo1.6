@@ -73,3 +73,10 @@ let 空のKVSでdeleteしても空のまま() =
   |> When delete "hoge"
   |> It should equal []
   |> Verify
+
+[<Scenario>]
+let 存在するキーを指定してdeleteすると取り除く() =
+  Given KeyValueStore.init [1, "a"; 2, "b"; 10, ""]
+  |> When delete 2
+  |> It should equal [1, "a"; 10, ""]
+  |> Verify
