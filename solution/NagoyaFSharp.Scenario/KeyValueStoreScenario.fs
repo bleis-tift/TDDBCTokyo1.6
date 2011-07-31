@@ -10,6 +10,12 @@ let 空のKVSが生成できる() =
   |> It should equal []
   |> Verify
 
+[<Scenario>]
+let ペアを複数登録したKVSが生成できる() =
+  Given KeyValueStore.init [(1, "a"); (2, "b")]
+  |> It should equal [(1, "a"); (2, "b")]
+  |> Verify
+
 [<Example(1, "b")>]
 [<Example(2, "a")>]
 let ``空のKVSにペアをputすると、それのみを含むKVSが返る`` k v =
@@ -38,4 +44,25 @@ let ペアを一つ含むKVSをtoStrで文字列化できる() =
   Given KeyValueStore.empty |> put "a" 10
   |> When toStr
   |> It should equal @"[(""a"", 10)]"
+  |> Verify
+
+[<Scenario>]
+let 空のKVSからgetするとNoneが返る() =
+  Given KeyValueStore.empty
+  |> When get "hoge"
+  |> It should equal None
+  |> Verify
+
+[<Scenario>]
+let 存在するキーを指定してgetするとSomeに包まれた値が取得できる() =
+  Given KeyValueStore.empty |> put 1 10
+  |> When get 1
+  |> It should equal (Some 10)
+  |> Verify
+
+[<Scenario>]
+let 存在しないキーを指定してgetするとNoneが返る() =
+  Given KeyValueStore.empty |> put 1 10
+  |> When get 10
+  |> It should equal None 
   |> Verify
