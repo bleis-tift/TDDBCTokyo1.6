@@ -69,6 +69,16 @@ let ``新→旧の順番で文字列化される``() =
   |> Verify
 
 [<Scenario>]
+let 時刻を指定して文字列化できる() =
+  Given KeyValueStore.empty
+        |> putWithDt 0 0 (DateTime(2011, 7, 31))
+        |> putWithDt 1 0 (DateTime(2011, 8, 1))
+        |> putWithDt 2 0 (DateTime(2011, 8, 2))
+  |> When toStrFrom (DateTime(2011, 8, 1))
+  |> It should equal @"[(2, 0, 2011/08/02 0:00:00); (1, 0, 2011/08/01 0:00:00)]"
+  |> Verify
+
+[<Scenario>]
 let 空のKVSからgetするとNoneが返る() =
   Given KeyValueStore.empty
   |> When get "hoge"
