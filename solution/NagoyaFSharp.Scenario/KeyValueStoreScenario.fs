@@ -17,3 +17,10 @@ let ``空のKVSにキーと値をputすると、それのみを含むKVSが返�
   |> When put k v
   |> It should equal [k, v]
   |> Verify
+
+[<Example(2, "b")>]
+let ``(1, "a")のみを含むKVSに1以外のキーと値をputすると、putしたキーと値が追加されたKVSが返る`` k v =
+  Given KeyValueStore.empty |> put 1 "a"
+  |> When put k v
+  |> It should equal [1, "a"; k, v]
+  |> Verify
