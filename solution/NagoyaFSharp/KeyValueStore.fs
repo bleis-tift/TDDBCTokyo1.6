@@ -16,7 +16,7 @@ let putWithDt k v dt kvs =
   (k, v, dt) :: (kvs |> List.filter (eq k >> not))
 
 let put k v kvs =
-  (k, v, now()) :: (kvs |> List.filter (eq k >> not))
+  kvs |> putWithDt k v (now())
 
 let putAll xs kvs =
   xs |> List.fold (fun st (k, v) -> st |> put k v) kvs
