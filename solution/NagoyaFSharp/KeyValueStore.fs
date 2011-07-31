@@ -7,7 +7,7 @@ let put k v kvs =
 
 let get key kvs =
   kvs
-  |> List.tryFind (fun (k, _) -> k = key)
+  |> List.tryFind (fst >> ((=)key))
   |> Option.map snd    
 
 let toStr kvs =
