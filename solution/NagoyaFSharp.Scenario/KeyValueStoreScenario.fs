@@ -114,6 +114,26 @@ let 存在するキーを指定してdeleteすると取り除く() =
   |> Verify
 
 [<Scenario>]
+let 指定時間より前のペアを削除できる() =
+  Given KeyValueStore.empty
+        |> putWithDt 0 0 (DateTime(2011, 7,31))
+        |> putWithDt 1 0 (DateTime(2011, 8, 31))
+        |> putWithDt 2 0 (DateTime(2011, 9, 30))
+  |> When deleteUntil (DateTime(2011, 9, 1))
+  |> It should equal [2, 0, DateTime(2011, 9, 30)]
+  |> Verify
+
+[<Scenario>]
+let 指定時間は削除されない() =
+  Given KeyValueStore.empty
+        |> putWithDt 0 0 (DateTime(2011, 7,31))
+        |> putWithDt 1 0 (DateTime(2011, 8, 31))
+        |> putWithDt 2 0 (DateTime(2011, 9, 30))
+  |> When deleteUntil (DateTime(2011, 8, 31))
+  |> It should equal [2, 0, DateTime(2011, 9, 30); 1, 0, DateTime(2011, 8, 31)]
+  |> Verify
+
+[<Scenario>]
 let putAllで複数登録できる() =
   Given KeyValueStore.init ["hoge", "piyo"; "foo", "bar"]
   |> When putAll ["a", "aaa"; "b", "bbb"]
