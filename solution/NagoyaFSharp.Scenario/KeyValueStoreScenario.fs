@@ -39,3 +39,9 @@ let ペアを一つ含むKVSをtoStrで文字列化できる() =
   |> When toStr
   |> It should equal @"[(""a"", 10)]"
   |> Verify
+
+let 空のKVSからgetするとNoneが返る() =
+  Given KeyValueStore.empty
+  |> When get "hoge"
+  |> It should equal None
+  |> Verify
