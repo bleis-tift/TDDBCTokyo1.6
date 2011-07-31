@@ -21,7 +21,7 @@ let 空のKVSが生成できる() =
 [<Scenario>]
 let ペアを複数登録したKVSが生成できる() =
   Given KeyValueStore.init [(1, "a"); (2, "b")]
-  |> It should equal [(1, "a", defaultDt); (2, "b", defaultDt)]
+  |> It should equal [(2, "b", defaultDt); (1, "a", defaultDt)]
   |> Verify
 
 [<Example(1, "b")>]
