@@ -2,6 +2,8 @@
 
 let empty = []
 
+let init kvs = kvs
+
 let put k v kvs =
   (k, v) :: kvs
 

@@ -10,6 +10,12 @@ let 空のKVSが生成できる() =
   |> It should equal []
   |> Verify
 
+[<Scenario>]
+let ペアを複数登録したKVSが生成できる() =
+  Given KeyValueStore.init [(1, "a"); (2, "b")]
+  |> It should equal [(1, "a"); (2, "b")]
+  |> Verify
+
 [<Example(1, "b")>]
 [<Example(2, "a")>]
 let ``空のKVSにペアをputすると、それのみを含むKVSが返る`` k v =
