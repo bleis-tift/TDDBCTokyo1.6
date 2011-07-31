@@ -40,3 +40,6 @@ let toStrFrom t kvs =
 
 let dump kvs =
   do printf "%s" (kvs |> toStr)
+
+let dumpFrom t kvs =
+  do printf "%s" (kvs |> toStrFrom t)
