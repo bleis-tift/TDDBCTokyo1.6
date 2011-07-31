@@ -2,9 +2,10 @@
 
 open NaturalSpec
 open NUnit.Framework
+open System
 open KeyValueStore
 
-let defaultDt = System.DateTime(2011, 7, 31)
+let defaultDt = DateTime(2011, 7, 31)
 
 [<SetUp>]
 let setup () =
@@ -114,4 +115,11 @@ let 指定した引数内にキーの重複がある場合後勝ち() =
   Given KeyValueStore.empty
   |> When putAll [1, "aaa"; 2, "bbb"; 3, "ccc"; 2, "hoge"]
   |> It should equal [2, "hoge", defaultDt; 3, "ccc", defaultDt; 1, "aaa", defaultDt]
+  |> Verify
+
+[<Scenario>]
+let 時刻を指定して追加できる() =
+  Given KeyValueStore.empty
+  |> When putWithDt 1 "hoge" (DateTime(2010, 7, 30))
+  |> It should equal [1, "hoge", DateTime(2010, 7, 30)]
   |> Verify

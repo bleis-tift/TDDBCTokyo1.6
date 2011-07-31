@@ -12,6 +12,9 @@ let init kvs = kvs |> List.map (fun (k, v) -> k, v, now())
 
 let private eq key (k, _, _) = k = key
 
+let putWithDt k v dt kvs =
+  (k, v, dt) :: (kvs |> List.filter (eq k >> not))
+
 let put k v kvs =
   (k, v, now()) :: (kvs |> List.filter (eq k >> not))
 
