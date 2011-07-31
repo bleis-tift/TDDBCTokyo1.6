@@ -27,7 +27,7 @@ let ``空のKVSにペアをputすると、それのみを含むKVSが返る`` k 
 [<Example(2, "b")>]
 [<Example(3, "c")>]
 let ``(1, "a")のみを含むKVSに重複しないペアをputすると、putしたペアが追加されたKVSが返る`` k v =
-  Given KeyValueStore.empty |> put 1 "a"
+  Given KeyValueStore.init [1, "a"]
   |> When put k v
   |> It should equal [k, v; 1, "a"]
   |> Verify
@@ -41,7 +41,7 @@ let 空のKVSをtoStrで文字列化できる() =
 
 [<Scenario>]
 let ペアを一つ含むKVSをtoStrで文字列化できる() =
-  Given KeyValueStore.empty |> put "a" 10
+  Given KeyValueStore.init ["a", 10]
   |> When toStr
   |> It should equal @"[(""a"", 10)]"
   |> Verify
@@ -55,14 +55,14 @@ let 空のKVSからgetするとNoneが返る() =
 
 [<Scenario>]
 let 存在するキーを指定してgetするとSomeに包まれた値が取得できる() =
-  Given KeyValueStore.empty |> put 1 10
+  Given KeyValueStore.init [1, 10]
   |> When get 1
   |> It should equal (Some 10)
   |> Verify
 
 [<Scenario>]
 let 存在しないキーを指定してgetするとNoneが返る() =
-  Given KeyValueStore.empty |> put 1 10
+  Given KeyValueStore.init [1, 10]
   |> When get 10
   |> It should equal None 
   |> Verify
