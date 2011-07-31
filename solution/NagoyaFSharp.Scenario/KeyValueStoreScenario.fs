@@ -114,7 +114,7 @@ let putAllで複数登録できる() =
 let 既に存在するキーは値が上書きされる() =
   Given KeyValueStore.init [1, "hoge"; 2, "piyo"; 3, "foo"; 4, "bar"]
   |> When putAll [1, "aaa"; 3, "bbb"]
-  |> It should equal [3, "bbb", defaultDt; 1, "aaa", defaultDt; 2, "piyo", defaultDt; 4, "bar", defaultDt]
+  |> It should equal [3, "bbb", defaultDt; 1, "aaa", defaultDt; 4, "bar", defaultDt; 2, "piyo", defaultDt]
   |> Verify
 
 [<Scenario>]
