@@ -62,6 +62,13 @@ let ペアを一つ含むKVSをtoStrで文字列化できる() =
   |> Verify
 
 [<Scenario>]
+let ``新→旧の順番で文字列化される``() =
+  Given KeyValueStore.init ["a", 10; "b", 20]
+  |> When toStr
+  |> It should equal @"[(""b"", 20, 2011/07/31 0:00:00); (""a"", 10, 2011/07/31 0:00:00)]"
+  |> Verify
+
+[<Scenario>]
 let 空のKVSからgetするとNoneが返る() =
   Given KeyValueStore.empty
   |> When get "hoge"
