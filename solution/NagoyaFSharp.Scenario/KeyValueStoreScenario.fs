@@ -40,8 +40,16 @@ let ペアを一つ含むKVSをtoStrで文字列化できる() =
   |> It should equal @"[(""a"", 10)]"
   |> Verify
 
+[<Scenario>]
 let 空のKVSからgetするとNoneが返る() =
   Given KeyValueStore.empty
   |> When get "hoge"
   |> It should equal None
+  |> Verify
+
+[<Scenario>]
+let 存在するキーを指定してgetするとSomeに包まれた値が取得できる() =
+  Given KeyValueStore.empty |> put 1 10
+  |> When get 1
+  |> It should equal (Some 10)
   |> Verify
