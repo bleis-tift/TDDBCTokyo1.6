@@ -1,5 +1,11 @@
 ﻿module KeyValueStore
 
+open System
+
+let mutable dt: DateTime option = None
+
+let now () = match dt with Some dt -> dt | None -> DateTime.Now
+
 let empty = []
 
 let init kvs = kvs
