@@ -8,8 +8,6 @@ let now () = match dt with Some dt -> dt | None -> DateTime.Now
 
 let empty = []
 
-let init kvs = kvs |> List.map (fun (k, v) -> k, v, now())
-
 let private eq key (k, _, _) = k = key
 
 let putWithDt k v dt kvs =
@@ -20,6 +18,8 @@ let put k v kvs =
 
 let putAll xs kvs =
   xs |> List.fold (fun st (k, v) -> st |> put k v) kvs
+
+let init kvs = empty |> putAll kvs
 
 let get key kvs =
   kvs
