@@ -2,4 +2,4 @@
 
 let empty = []
 
-let put k v kvs = [(1, "b")]
+let put k v kvs = [k, v]
