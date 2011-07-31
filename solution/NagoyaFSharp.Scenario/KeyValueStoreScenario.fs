@@ -44,7 +44,7 @@ let ``(1, "a")のみを含むKVSに重複しないペアをputすると、putし
 let ``既に存在するキーを含むペアをputすると、値が更新される``() =
   Given KeyValueStore.init [1, "a"; 2, "b"; 3, "c"]
   |> When put 2 "hoge"
-  |> It should equal [2, "hoge", defaultDt; 1, "a", defaultDt; 3, "c", defaultDt]
+  |> It should equal [2, "hoge", defaultDt; 3, "c", defaultDt; 1, "a", defaultDt]
   |> Verify
 
 [<Scenario>]
