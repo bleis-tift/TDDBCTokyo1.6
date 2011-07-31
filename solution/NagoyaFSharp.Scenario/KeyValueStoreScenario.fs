@@ -25,3 +25,17 @@ let ``(1, "a")のみを含むKVSに重複しないペアをputすると、putし
   |> When put k v
   |> It should equal [k, v; 1, "a"]
   |> Verify
+
+[<Scenario>]
+let 空のKVSをtoStrで文字列化できる() =
+  Given KeyValueStore.empty
+  |> When toStr
+  |> It should equal "[]"
+  |> Verify
+
+[<Scenario>]
+let ペアを一つ含むKVSをtoStrで文字列化できる() =
+  Given KeyValueStore.empty |> put "a" 10
+  |> When toStr
+  |> It should equal @"[(""a"", 10)]"
+  |> Verify
