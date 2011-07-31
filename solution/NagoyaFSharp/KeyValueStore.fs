@@ -8,7 +8,7 @@ let now () = match dt with Some dt -> dt | None -> DateTime.Now
 
 let empty = []
 
-let init kvs = kvs |> List.map (fun (k, v) -> k, v, now())
+let init kvs = kvs |> List.map (fun (k, v) -> k, v, now()) |> List.rev
 
 let private eq key (k, _, _) = k = key
 
