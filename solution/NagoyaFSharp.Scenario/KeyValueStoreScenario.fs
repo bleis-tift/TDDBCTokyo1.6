@@ -32,3 +32,10 @@ let 空のKVSをtoStrで文字列化できる() =
   |> When toStr
   |> It should equal "[]"
   |> Verify
+
+[<Scenario>]
+let ペアを一つ含むKVSをtoStrで文字列化できる() =
+  Given KeyValueStore.empty |> put "a" 10
+  |> When toStr
+  |> It should equal @"[(""a"", 10)]"
+  |> Verify
