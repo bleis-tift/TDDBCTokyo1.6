@@ -12,6 +12,8 @@ let get key kvs =
   |> List.tryFind (fst >> ((=)key))
   |> Option.map snd    
 
+let delete key kvs = []
+
 let toStr kvs =
   sprintf "%A" kvs
 

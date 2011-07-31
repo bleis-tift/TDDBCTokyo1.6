@@ -66,3 +66,10 @@ let 存在しないキーを指定してgetするとNoneが返る() =
   |> When get 10
   |> It should equal None 
   |> Verify
+
+[<Scenario>]
+let 空のKVSでdeleteしても空のまま() =
+  Given KeyValueStore.empty
+  |> When delete "hoge"
+  |> It should equal []
+  |> Verify
