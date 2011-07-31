@@ -53,3 +53,10 @@ let 存在するキーを指定してgetするとSomeに包まれた値が取得
   |> When get 1
   |> It should equal (Some 10)
   |> Verify
+
+[<Scenario>]
+let 存在しないキーを指定してgetするとNoneが返る() =
+  Given KeyValueStore.empty |> put 1 10
+  |> When get 10
+  |> It should equal None 
+  |> Verify
