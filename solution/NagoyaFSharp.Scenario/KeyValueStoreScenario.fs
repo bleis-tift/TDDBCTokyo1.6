@@ -101,3 +101,10 @@ let 既に存在するキーは値が上書きされる() =
   |> When putAll [1, "aaa"; 3, "bbb"]
   |> It should equal [3, "bbb"; 1, "aaa"; 2, "piyo"; 4, "bar"]
   |> Verify
+
+[<Scenario>]
+let 指定した引数内にキーの重複がある場合後勝ち() =
+  Given KeyValueStore.empty
+  |> When putAll [1, "aaa"; 2, "bbb"; 3, "ccc"; 2, "hoge"]
+  |> It should equal [2, "hoge"; 3, "ccc"; 1, "aaa"]
+  |> Verify
