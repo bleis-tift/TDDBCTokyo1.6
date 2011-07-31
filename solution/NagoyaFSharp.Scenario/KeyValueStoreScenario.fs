@@ -33,6 +33,13 @@ let ``(1, "a")のみを含むKVSに重複しないペアをputすると、putし
   |> Verify
 
 [<Scenario>]
+let ``既に存在するキーを含むペアをputすると、値が更新される``() =
+  Given KeyValueStore.init [1, "a"; 2, "b"; 3, "c"]
+  |> When put 2 "hoge"
+  |> It should equal [2, "hoge"; 1, "a"; 3, "c"]
+  |> Verify
+
+[<Scenario>]
 let 空のKVSをtoStrで文字列化できる() =
   Given KeyValueStore.empty
   |> When toStr

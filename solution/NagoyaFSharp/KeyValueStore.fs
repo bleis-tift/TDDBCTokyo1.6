@@ -4,10 +4,10 @@ let empty = []
 
 let init kvs = kvs
 
-let put k v kvs =
-  (k, v) :: kvs
-
 let private eq key (k, _) = k = key
+
+let put k v kvs =
+  (k, v) :: (kvs |> List.filter (eq k >> not))
 
 let get key kvs =
   kvs
