@@ -7,8 +7,7 @@ let init kvs = kvs
 let private eq key (k, _) = k = key
 
 let put k v kvs =
-  if kvs |> List.exists (eq k) then (k, v) :: (kvs |> List.filter (eq k >> not))
-  else (k, v) :: kvs
+  (k, v) :: (kvs |> List.filter (eq k >> not))
 
 let get key kvs =
   kvs
