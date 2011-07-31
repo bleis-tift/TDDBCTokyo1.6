@@ -7,10 +7,15 @@ let init kvs = kvs
 let put k v kvs =
   (k, v) :: kvs
 
+let private eq key (k, _) = k = key
+
 let get key kvs =
   kvs
-  |> List.tryFind (fst >> ((=)key))
+  |> List.tryFind (eq key)
   |> Option.map snd    
+
+let delete key kvs =
+  kvs |> List.filter(eq key >> not) 
 
 let toStr kvs =
   sprintf "%A" kvs
