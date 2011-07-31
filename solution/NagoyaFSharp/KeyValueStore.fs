@@ -8,7 +8,7 @@ let now () = match dt with Some dt -> dt | None -> DateTime.Now
 
 let empty = []
 
-let private eq key (k, _, _) = k = key
+let eq key (k, _, _) = k = key
 
 let putWithDt k v dt kvs =
   (k, v, dt) :: (kvs |> List.filter (eq k >> not))
