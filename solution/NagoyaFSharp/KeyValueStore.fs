@@ -9,6 +9,9 @@ let private eq key (k, _) = k = key
 let put k v kvs =
   (k, v) :: (kvs |> List.filter (eq k >> not))
 
+let putAll xs kvs =
+  xs |> List.fold (fun st (k, v) -> st |> put k v) kvs
+
 let get key kvs =
   kvs
   |> List.tryFind (eq key)
