@@ -107,7 +107,7 @@ let 存在するキーを指定してdeleteすると取り除く() =
 let putAllで複数登録できる() =
   Given KeyValueStore.init ["hoge", "piyo"; "foo", "bar"]
   |> When putAll ["a", "aaa"; "b", "bbb"]
-  |> It should equal ["b", "bbb", defaultDt; "a", "aaa", defaultDt; "hoge", "piyo", defaultDt; "foo", "bar", defaultDt]
+  |> It should equal ["b", "bbb", defaultDt; "a", "aaa", defaultDt; "foo", "bar", defaultDt; "hoge", "piyo", defaultDt]
   |> Verify
 
 [<Scenario>]
