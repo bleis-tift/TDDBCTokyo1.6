@@ -2,7 +2,7 @@ module KeyValueStore
 
 open System
 
-// 公開API
+// 蜈ｬ髢帰PI
 val empty: 'a list
 
 val init: ('a * 'b) list -> ('a * 'b * DateTime) list when 'a: equality
@@ -28,7 +28,7 @@ val dump: 'a -> unit
 
 val dumpFrom: 'a -> seq<'b * 'c * 'a> -> unit when 'a: comparison
 
-// 以下テスト用
+// 莉･荳九ユ繧ｹ繝育畑
 val mutable internal dt: DateTime option
 
 val internal putWithDt:
