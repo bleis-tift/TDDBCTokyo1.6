@@ -16,14 +16,14 @@ type SetUp() =
 module 生成 =
   [<Scenario>]
   let 空のKVSが生成できる() =
-    Given ()
-    |> When (fun () -> KeyValueStore.empty)
+    Given KeyValueStore.empty
     |> It should equal []
     |> Verify
 
   [<Scenario>]
   let ペアを複数登録したKVSが生成できる() =
-    Given KeyValueStore.init [(1, "a"); (2, "b")]
+    Given [(1, "a"); (2, "b")]
+    |> When KeyValueStore.init
     |> It should equal [(2, "b", defaultDt); (1, "a", defaultDt)]
     |> Verify
 
