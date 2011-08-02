@@ -2,39 +2,35 @@ module KeyValueStore
 
 open System
 
+type Pair<'a, 'b> = ('a * 'b)
+type KVS<'a, 'b> = ('a * 'b * DateTime) list
+
 // 公開API
 val empty: 'a list
 
-val init: ('a * 'b) list -> ('a * 'b * DateTime) list when 'a: equality
+val init: Pair<'a, 'b> list -> KVS<'a, 'b> when 'a: equality
 
-val put:
-  'a ->
-    'b -> ('a * 'b * DateTime) list -> ('a * 'b * DateTime) list
-    when 'a: equality
+val put: 'a -> 'b -> KVS<'a, 'b> -> KVS<'a, 'b> when 'a: equality
 
-val putAll:
-  ('a * 'b) list ->
-    ('a * 'b * DateTime) list -> ('a * 'b * DateTime) list
-    when 'a: equality
+val putAll: Pair<'a, 'b> list -> KVS<'a, 'b> -> KVS<'a, 'b> when 'a: equality
 
-val get: 'a -> ('a * 'b * 'c) list -> 'b option when 'a: equality
+val get: 'a -> KVS<'a, 'b> -> 'b option when 'a: equality
 
-val delete: 'a -> ('a * 'b * 'c) list -> ('a * 'b * 'c) list when 'a: equality
+val delete: 'a -> KVS<'a, 'b> -> KVS<'a, 'b> when 'a: equality
 
-val deleteUntil:
-  'a -> seq<'b * 'c * 'a> -> ('b * 'c * 'a) list when 'a: comparison
+val deleteUntil: DateTime -> KVS<'a, 'b> -> KVS<'a, 'b>
 
-val dump: 'a -> unit
+val dump: KVS<_, _> -> unit
 
-val dumpFrom: 'a -> seq<'b * 'c * 'a> -> unit when 'a: comparison
+val dumpFrom: DateTime -> KVS<_, _> -> unit
 
 // 以下テスト用
 val mutable internal dt: DateTime option
 
 val internal putWithDt:
-  'a -> 'b -> 'c -> ('a * 'b * 'c) list -> ('a * 'b * 'c) list
+  'a -> 'b -> DateTime -> KVS<'a, 'b> -> KVS<'a, 'b>
     when 'a: equality
 
-val internal toStr: 'a -> string
+val internal toStr: KVS<_, _> -> string
 
-val internal toStrFrom: 'a -> seq<'b * 'c * 'a> -> string when 'a: comparison
+val internal toStrFrom: DateTime -> KVS<_, _> -> string
