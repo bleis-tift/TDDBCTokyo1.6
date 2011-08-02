@@ -30,7 +30,7 @@ module 生成 =
 module 登録 =
   [<Example(1, "b")>]
   [<Example(2, "a")>]
-  let ``空のKVSにペアをputすると、それのみを含むKVSが返る`` k v =
+  let ``空のKVSにペアを登録できる`` k v =
     Given KeyValueStore.empty
     |> When put k v
     |> It should equal [k, v, defaultDt]
@@ -38,21 +38,21 @@ module 登録 =
 
   [<Example(2, "b")>]
   [<Example(3, "c")>]
-  let ``(1, "a")のみを含むKVSに重複しないペアをputすると、putしたペアが追加されたKVSが返る`` k v =
+  let ``KVS内に存在しないキーのペアを登録すると、登録したペアが追加されたKVSが返る`` k v =
     Given KeyValueStore.init [1, "a"]
     |> When put k v
     |> It should equal [k, v, defaultDt; 1, "a", defaultDt]
     |> Verify
 
   [<Scenario>]
-  let ``既に存在するキーを含むペアをputすると、値が更新される``() =
+  let ``KVS内に存在するキーのペアを登録すると、値が更新される``() =
     Given KeyValueStore.init [1, "a"; 2, "b"; 3, "c"]
     |> When put 2 "hoge"
     |> It should equal [2, "hoge", defaultDt; 3, "c", defaultDt; 1, "a", defaultDt]
     |> Verify
 
   [<Scenario>]
-  let 時刻を指定して追加できる() =
+  let 時刻を指定して登録できる() =
     Given KeyValueStore.empty
     |> When putWithDt 1 "hoge" (DateTime(2010, 7, 30))
     |> It should equal [1, "hoge", DateTime(2010, 7, 30)]
@@ -60,7 +60,7 @@ module 登録 =
 
 module 複数登録 =
   [<Scenario>]
-  let putAllで複数登録できる() =
+  let 複数登録できる() =
     Given KeyValueStore.init ["hoge", "piyo"; "foo", "bar"]
     |> When putAll ["a", "aaa"; "b", "bbb"]
     |> It should equal ["b", "bbb", defaultDt; "a", "aaa", defaultDt; "foo", "bar", defaultDt; "hoge", "piyo", defaultDt]
@@ -82,21 +82,21 @@ module 複数登録 =
 
 module 取得 =
   [<Scenario>]
-  let 空のKVSからgetするとNoneが返る() =
+  let 空のKVSから取得するとNoneが返る() =
     Given KeyValueStore.empty
     |> When get "hoge"
     |> It should equal None
     |> Verify
 
   [<Scenario>]
-  let 存在するキーを指定してgetするとSomeに包まれた値が取得できる() =
+  let 存在するキーを指定して取得するとSomeに包まれた値が取得できる() =
     Given KeyValueStore.init [1, 10]
     |> When get 1
     |> It should equal (Some 10)
     |> Verify
 
   [<Scenario>]
-  let 存在しないキーを指定してgetするとNoneが返る() =
+  let 存在しないキーを指定して取得するとNoneが返る() =
     Given KeyValueStore.init [1, 10]
     |> When get 10
     |> It should equal None 
@@ -104,14 +104,14 @@ module 取得 =
 
 module 削除 =
   [<Scenario>]
-  let 空のKVSでdeleteしても空のまま() =
+  let 空のKVSで削除しても空のまま() =
     Given KeyValueStore.empty
     |> When delete "hoge"
     |> It should equal []
     |> Verify
 
   [<Scenario>]
-  let 存在するキーを指定してdeleteすると取り除く() =
+  let 存在するキーを指定して削除すると取り除く() =
     Given KeyValueStore.init [1, "a"; 2, "b"; 10, ""]
     |> When delete 2
     |> It should equal [10, "", defaultDt; 1, "a", defaultDt]
@@ -139,14 +139,14 @@ module 削除 =
 
 module 文字列化 =
   [<Scenario>]
-  let 空のKVSをtoStrで文字列化できる() =
+  let 空のKVSを文字列化できる() =
     Given KeyValueStore.empty
     |> When toStr
     |> It should equal "[]"
     |> Verify
 
   [<Scenario>]
-  let ペアを一つ含むKVSをtoStrで文字列化できる() =
+  let ペアを一つ含むKVSを文字列化できる() =
     Given KeyValueStore.init ["a", 10]
     |> When toStr
     |> It should equal @"[(""a"", 10, 2011/07/31 0:00:00)]"
